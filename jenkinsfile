@@ -6,7 +6,9 @@ node {
      gitcommit = readFile('.git/commit-id').trim()
    }
    stage('test') {
-     nodejs(nodeJSInstallationName: 'nodejs') {
+     def contenedortest = docker.image('node:14.6')
+     contenedortest.pull()
+     contenedortest.inside {
        sh 'npm install --only=dev'
        sh 'npm test'
      }
