@@ -1,28 +1,4 @@
 node {
-   def gitcommit
-   stage('Verificación SCM') {
-     checkout scm
-     sh "git rev-parse --short HEAD > .git/commit-id"                        
-     gitcommit = readFile('.git/commit-id').trim()
-   }
-   stage('test') {
-     def contenedortest = docker.image('node:15.6')
-     contenedortest.pull()
-     contenedortest.inside {
-       sh 'npm install --only=dev'
-       sh 'npm test'
-     }
-   }
-   stage('Docker Build & Push') {
-     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-      def nuestraapp = docker.build("norman404/nodenewapp:${gitcommit}", ".")
-      nuestraapp.push()
-     }
-   }
-}
-
-
-node {
     def gitcommit
     def contenedortest = docker.image('node:15.6')
 
@@ -37,13 +13,6 @@ node {
         contenedortest.inside {
             sh 'npm install --only=dev'
             sh 'npm test'
-        }
-    }
-
-    stage('Sonar Scanner Node.js') {
-        def sonarqubeScannerHome = tool name: 'sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        withCredentials([string(credentialsId: 'sonar', variable: 'sonarLogin')]) {
-            sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=${sonarLogin} -Dsonar.projectName=nodenewapp -Dsonar.projectVersion=${gitcommit} -Dsonar.projectKey=NodeApp -Dsonar.sources=. -Dsonar.language=js"
         }
     }
 
