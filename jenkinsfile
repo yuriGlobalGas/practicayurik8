@@ -21,10 +21,6 @@ node {
             def nuestraapp = docker.build("norman404/nodenewapp:${gitcommit}", ".")
             nuestraapp.push()
         }
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            def nuestraapp = docker.build("norman404/nodenewapp:latest", ".")
-            nuestraapp.push()
-        }
     }
 
     stage('Update & Deploy') {
