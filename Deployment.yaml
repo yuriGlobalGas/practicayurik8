@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: knodeapp
-          image: norman404/nodenewapp
+          image: norman404/nodenewapp:<IMAGE_TAG>
           ports:
             - containerPort: 3000
 ---
