@@ -36,7 +36,8 @@ metadata:
   name: knodeapp-ingress
 spec:
   rules:
-  - http:
+  - host: knodeapp.molcajete.dev  # <-- Agrega tu dominio aquí
+    http:
       paths:
       - path: /
         pathType: Prefix
