@@ -35,6 +35,7 @@ kind: Ingress
 metadata:
   name: knodeapp-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: knodeapp.molcajete.dev  # <-- Agrega tu dominio aquí
     http:
