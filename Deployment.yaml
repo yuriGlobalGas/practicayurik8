@@ -47,3 +47,18 @@ spec:
             name: knodeapp-service
             port:
               number: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-echo
+  namespace: default
+  annotations:
+    cert-manager.io/issuer: letsencrypt-nginx
+spec:
+  tls:
+  - hosts:
+    - knodeapp.molcajete.dev
+    secretName: letsencrypt-nginx
+  rules:
+    - host: knodeapp.molcajete.dev
