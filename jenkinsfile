@@ -27,6 +27,6 @@ node {
         }
     }
     stage('Docker Build & Push') {
-        sh "kubectl applay -f Deployment.yaml"
+        sh "kubectl apply -f Deployment.yaml"
     }
 }
