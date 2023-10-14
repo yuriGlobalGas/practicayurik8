@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knodeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knodeapp
+  template:
+    metadata:
+      labels:
+        app: knodeapp
+    spec:
+      containers:
+        - name: knodeapp
+          image: norman404/nodenewapp
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knodeapp-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: knodeapp
